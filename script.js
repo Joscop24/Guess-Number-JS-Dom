@@ -1,41 +1,3 @@
-/*
-for (let i = 0; i < 21; i += 2) {
-    if(i == 10){
-      console.log('vla le 10')
-    } else {
-      console.log(i)
-    }
-  }
-  */
-/*****************************************************************/
-/*
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
-var num = [];
-
-for (let i = 0; i < 20; i++) {
-
-  aleatoire = getRandomInt(60)
-
-  // condition si le numero est dans le tableau, console ceci et recommencer
-  if (num.includes(aleatoire)) {
-    console.log('ya des doublons', aleatoire)
-    i--;
-  } else {
-    // ajout du numero dans le tableau 
-    num.push(aleatoire)
-
-    // Afficher dans la console
-    console.log('num gen', aleatoire);
-    // console.log('ya pas de doublons')
-
-  }
-}
-console.log(num);
-*/
-/*****************************************************************/
-
 // Creation des élements
 const h1 = document.createElement("h1")
 const h2 = document.createElement("h2") // ecrire ce qu'on marque temporaire
@@ -49,7 +11,7 @@ var t = document.createTextNode("Click me");
 var random;
 var output;
 let tentative = 0;
-let minValue = 0;
+let minValue = 1;
 let maxValue = 100;
 
 // Raccourci Enfants
@@ -88,7 +50,7 @@ function getValue() {
   output = document.getElementById("in").value;
   h2.innerHTML = 'Ton chiffre :' + output;
   checkInput();
-  tentative++;
+  // tentative++;
   console.log(tentative);
   p.innerHTML = "Tu en es à ta tentative n° : " + tentative ;
   resetInput();
@@ -148,6 +110,7 @@ function checkInput() {
   }
   else{
     getStatement(output);
+    tentative++
 }
 }
 
