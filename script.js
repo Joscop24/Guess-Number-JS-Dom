@@ -48,8 +48,9 @@ var btn = document.createElement("BUTTON");
 var t = document.createTextNode("Click me");
 var random;
 var output;
-let life = 0;
-let vieRemaining = 6;
+let tentative = 0;
+let minValue = 0;
+let maxValue = 100;
 
 // Raccourci Enfants
 let body = document.body;
@@ -61,9 +62,8 @@ input.setAttribute("id", "in");
 
 
 // Lancer l'event de recherche de valeur avec la touche Enter
-input.addEventListener("keypress", function(event) {
+input.addEventListener("keypress", function (event) {
   if (event.key === "Enter") {
-    checkInput()
     getValue()
   }
 })
@@ -72,10 +72,10 @@ input.addEventListener("keypress", function(event) {
 btn.onclick = function () { getValue() };
 
 
-// Génération d'un chiffre random entre 0 et 100
+// Fonction Génération d'un chiffre random entre 0 et 100
 function getRandomInt(max) {
   random = Math.floor(Math.random() * max);
-  console.log('num random ' + random);
+  console.log('chiffre aléatoire : ' + random);
   return random;
 }
 getRandomInt(100)
@@ -87,10 +87,10 @@ getRandomInt(100)
 function getValue() {
   output = document.getElementById("in").value;
   h2.innerHTML = 'Ton chiffre :' + output;
-  getTry();
-  getStatement(output);
-  vieRemaining -= 1;
-  p.innerHTML="Il te reste " + vieRemaining + " vies";
+  checkInput();
+  tentative++;
+  console.log(tentative);
+  p.innerHTML = "Tu en es à ta tentative n° : " + tentative ;
   resetInput();
 }
 
@@ -111,59 +111,54 @@ function getStatement(output) {
   }
   else {
     h3.innerHTML = "Le numéro était : " + random;
-    alert("Bravo, tu as gagné");
+    alert("Bravo, tu as gagné en " +tentative + " tentatives");
     reloadPage();
   }
 
 }
 
 
-// Systeme de vie
-function getTry(){
-  if (life < 5){
-    console.log(life)
-    life++;
-  }
-  else{
-    p.innerHTML="Tu es mort";
-    alert('vous avez perdu, le numéro était le : ' + random);
-    reloadPage();
-  }
+//  Fonction Reload la page apres la partie
+function reloadPage() {
+  window.location.reload();
 }
 
-// Reload la page apres la partie
-function reloadPage(){
-    window.location.reload();
-}
 
-// Reset de l'input + Focus de l'Input
-function resetInput(){
-  input.value ="";
+
+// Fonction Reset de l'input + Focus de l'Input
+function resetInput() {
+  input.value = "";
   document.getElementById("in").focus();
 }
 
-// Verifier qu'une valeur soit l'input et entre 0 & 100
-function checkInput(){
-    if (input.value == "" ){
-        console.log("pas de valeur");
-        alert("Mettez une valeur");
-    }
-    else if (input.value > 0){
-        alert("valeur inférieure de 0")
-    }
-    else if (input.value < 100){
-        alert("valeur suprérieur à 100")
-    }
+
+
+// Fonction Verifier qu'une valeur soit l'input et entre 0 & 100
+function checkInput() {
+  if (input.value == "") {
+    console.log("pas de valeur");
+    alert("Mettez une valeur");
+  }
+  else if (input.value < minValue) {
+    alert("valeur inférieure de 0");
+
+  }
+  else if (maxValue < input.value){
+    alert("trop haut de 100")
+  }
+  else{
+    getStatement(output);
 }
+}
+
+
+
 
 
 // Texte
 h1.innerHTML = 'Guess Number Between 0-100';
 
-
-
 // Gestion des Parents
-
 body.appendChild(h1);
 body.appendChild(h2);
 body.appendChild(h3);
